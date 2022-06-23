@@ -1,13 +1,14 @@
 ﻿@page "/fetchdata"
-@inject HttpClient Http
+@using Client.Contract
+@inject Client.Services.ISpaceXDataService service
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>SpaceX rockets</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>SpaceX rockets</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>This component demonstrates fetching data from a REST API.</p>
 
-@if (forecasts == null)
+@if (rockets == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -16,20 +17,22 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Active</th>
+                <th>Name</th>
+                <th>Stages</th>
+                <th>SuccessRatePct</th>
+                <th>Type</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var rocket in rockets)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@rocket.Active</td>
+                    <td>@rocket.Name</td>
+                    <td>@rocket.Stages</td>
+                    <td>@rocket.SuccessRatePct</td>
+                    <td>@rocket.Type</td>
                 </tr>
             }
         </tbody>
@@ -37,21 +40,11 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private RocketDTO[] rockets;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        rockets = await service.GetAllRockets();
     }
 
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
 }
