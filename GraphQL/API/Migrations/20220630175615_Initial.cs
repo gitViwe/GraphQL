@@ -12,11 +12,11 @@ namespace API.Migrations
                 name: "Heroes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Morality = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Avatar = table.Column<string>(type: "TEXT", nullable: false),
+                    Alias = table.Column<string>(type: "TEXT", nullable: false),
+                    Morality = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,10 +27,10 @@ namespace API.Migrations
                 name: "Elemental",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HeroId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    HeroId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

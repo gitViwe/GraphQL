@@ -1,17 +1,18 @@
 using API;
 using API.GraphQL;
+using API.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// for parallel queries
 builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("SQLite")));
 
 builder.Services
     .AddGraphQLServer()
+    .AddType<HeroDescriptor>()
     .AddQueryType<Query>();
 
 builder.Services.AddControllers();
