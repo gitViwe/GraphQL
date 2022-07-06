@@ -22,37 +22,10 @@ namespace API.Migrations
                 {
                     table.PrimaryKey("PK_Heroes", x => x.Id);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Elemental",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    HeroId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Elemental", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Elemental_Heroes_HeroId",
-                        column: x => x.HeroId,
-                        principalTable: "Heroes",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Elemental_HeroId",
-                table: "Elemental",
-                column: "HeroId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Elemental");
-
             migrationBuilder.DropTable(
                 name: "Heroes");
         }

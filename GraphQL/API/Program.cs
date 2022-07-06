@@ -1,19 +1,9 @@
 using API;
-using API.GraphQL;
-using API.Model;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("SQLite")));
-
-builder.Services
-    .AddGraphQLServer()
-    .AddType<HeroDescriptor>()
-    .AddQueryType<Query>();
+builder.Services.AddGraphQLServices(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,6 +24,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGraphQL();
+app.UseGraphQLServices();
 
 app.Run();
