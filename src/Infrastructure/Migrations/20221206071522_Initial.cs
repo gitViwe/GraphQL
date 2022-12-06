@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace API.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {
@@ -12,11 +12,10 @@ namespace API.Migrations
                 name: "Heroes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Avatar = table.Column<string>(type: "TEXT", nullable: false),
-                    Alias = table.Column<string>(type: "TEXT", nullable: false),
-                    Morality = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Alias = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
