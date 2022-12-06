@@ -28,8 +28,9 @@ public static class ConfigureServices
             .AddType<SuperHeroOutputDescriptor>()
             .AddQueryType<SuperHeroQuery>()
             .AddMutationType<SuperHeroMutation>()
-            .AddSubscriptionType<SuperHeroSubsription>()
-            .AddInMemorySubscriptions();
+            .AddSubscriptionType<SuperHeroSubscription>()
+            .AddInMemorySubscriptions()
+            .AddAuthorization();
 
         return services;
     }

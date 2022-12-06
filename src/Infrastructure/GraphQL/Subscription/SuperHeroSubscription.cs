@@ -4,17 +4,18 @@ using HotChocolate.Subscriptions;
 
 namespace Infrastructure.GraphQL.Subscription;
 
-public class SuperHeroSubsription
+[GraphQLDescription("The  class to encapsulate the GraphQL subscriptions for SuperHero")]
+public class SuperHeroSubscription
 {
     [Subscribe]
-    [Topic]
     [GraphQLDescription("The subscription for added heroes.")]
     public SuperHeroOutput HeroCreated([EventMessage] SuperHeroOutput superHero) => superHero;
 
     [SubscribeAndResolve]
-    public async ValueTask<ISourceStream<SuperHeroOutput>> HeroUpdated(int heroId, [Service] ITopicEventReceiver eventReceiver)
+    [GraphQLDescription("The subscription for updated heroes.")]
+    public async ValueTask<ISourceStream<SuperHeroOutput>> HeroUpdated(long heroId, [Service] ITopicEventReceiver eventReceiver)
     {
-        string topicName = $"{heroId}_{nameof(SuperHeroSubsription.HeroUpdated)}";
+        string topicName = $"{heroId}_{nameof(SuperHeroSubscription.HeroUpdated)}";
         return await eventReceiver.SubscribeAsync<string, SuperHeroOutput>(topicName);
     }
 }
