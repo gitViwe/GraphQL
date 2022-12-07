@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure;
 
@@ -38,5 +39,14 @@ public static class ConfigureServices
     public static void UseGraphQLServices(this IEndpointRouteBuilder app)
     {
         app.MapGraphQL();
+    }
+
+    public static async Task ApplyMigrationAsync(this IHost host)
+    {
+        using IServiceScope scope = host.Services.CreateScope();
+        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<DatabaseContext>>();
+
+        using var context = await contextFactory.CreateDbContextAsync();
+        await context.Database.MigrateAsync();
     }
 }
