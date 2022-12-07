@@ -1,0 +1,32 @@
+_id: req_fc30ad518c7149d9812b2a893f6b4986
+type: Request
+parentId: wrk_02a0b19223f74434ab2b6cbb9d2cfa98
+modified: 1670353132440
+created: 1670343175432
+url: https://localhost:7166/graphql/
+name: Mutation - Update
+description: ""
+method: POST
+body:
+  mimeType: application/graphql
+  text: '{"query":"mutation {\n  updateSuperHero(superHeroId: 1, input: {name:
+    \"GuyDude - 4\", alias: \"Bro - 4\"})
+    {\n    id\n    name\n    alias\n  }\n}"}'
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_a8686717cdf74f03bb26f336a8210f27
+  - id: pair_22ed69e94484465092a522b7c5e6ee0f
+    name: ""
+    value: ""
+    description: ""
+authentication: {}
+metaSortKey: -1668637476334.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
