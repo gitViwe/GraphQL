@@ -33,6 +33,7 @@ Then navigate to [http://localhost:5161/swagger](http://localhost:5161/swagger),
 
 ### Executing a query
 If you have setup everything correctly, you should be able to open the [GraphQL IDE Banana Cake Pop](https://chillicream.com/docs/hotchocolate/v12/get-started-with-graphql-in-net-core/#executing-a-query) at [http://localhost:5192/graphql](http://localhost:5192/graphql) and run the following.
+Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL requests
 
 
 ```
