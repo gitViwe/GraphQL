@@ -25,7 +25,7 @@ Things you need to use the software and how to install them.
    ```
 2. Run via Docker
    ```
-   cd problem-details
+   cd graphql
    docker compose up -d
    ```
 
