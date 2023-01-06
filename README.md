@@ -38,12 +38,12 @@ Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL
 
 ```
 query {
-	heroes {
-		id
-		name
-		alias
+  heroes {
+    id
+    name
+    alias
     createdBy
-	}
+  }
 }
 ```
 
@@ -69,11 +69,11 @@ mutation {
 
 ```
 subscription {
-	heroCreated {
-		id
-		name
-		alias
-	}
+  heroCreated {
+    id
+    name
+    alias
+  }
 }
 ```
 
