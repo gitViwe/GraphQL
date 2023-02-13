@@ -9,7 +9,7 @@ namespace Application.GraphQL.Attribute;
 public class ResolveCurrentUserAttribute : ObjectFieldDescriptorAttribute
 {
     public ResolveCurrentUserAttribute([CallerLineNumber] int order = 0) => Order = order;
-    public override void OnConfigure(
+    protected override void OnConfigure(
         IDescriptorContext context,
         IObjectFieldDescriptor descriptor,
         MemberInfo member)
