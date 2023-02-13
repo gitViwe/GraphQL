@@ -26,10 +26,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseWebSockets();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapGraphQL();
-});
+app.MapGraphQL();
 
 await app.ApplyMigrationAsync();
 

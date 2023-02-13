@@ -2,7 +2,7 @@
 using Application.GraphQL.ContextData;
 using Application.GraphQL.TypeDescriptor;
 using Domain;
-using HotChocolate.AspNetCore.Authorization;
+using HotChocolate.Authorization;
 using HotChocolate.Subscriptions;
 using Infrastructure.GraphQL.Subscription;
 using Infrastructure.Persistance;

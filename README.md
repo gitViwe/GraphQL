@@ -32,10 +32,12 @@ Things you need to use the software and how to install them.
 Then navigate to [http://localhost:5161/swagger](http://localhost:5161/swagger), register or login to get a JWT token.
 
 ### Executing a query
-If you have setup everything correctly, you should be able to open the [GraphQL IDE Banana Cake Pop](https://chillicream.com/docs/hotchocolate/v12/get-started-with-graphql-in-net-core/#executing-a-query) at [http://localhost:5192/graphql](http://localhost:5192/graphql) and run the following.
-Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL requests
+Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL requests.
+`Bearer <token>`
 
+If you have setup everything correctly, you should be able to open [GraphQL IDE Banana Cake Pop](https://chillicream.com/docs/hotchocolate/v12/get-started-with-graphql-in-net-core/#executing-a-query) at [http://localhost:5192/graphql](http://localhost:5192/graphql)
 
+Let's start with checking the entries on the database
 ```
 query {
   heroes {
@@ -47,26 +49,7 @@ query {
 }
 ```
 
-```
-mutation {
-  addSuperHero(input: {name: "John Doe", alias: "JD"}) {
-    id
-    name
-    alias
-  }
-}
-```
-
-```
-mutation {
-  updateSuperHero(superHeroId: 1, input: {name: "GuyDude A", alias: "Bro A"}) {
-    id
-    name
-    alias
-  }
-}
-```
-
+Now subscribe to the hero created event
 ```
 subscription {
   heroCreated {
@@ -77,9 +60,32 @@ subscription {
 }
 ```
 
+Let's create our own hero and check the `heroCreated` subscription for this event
+```
+mutation {
+  addSuperHero(input: {name: "John Doe", alias: "JD"}) {
+    id
+    name
+    alias
+  }
+}
+```
+
+Next, we fire up another subscription for updating a hero.
 ```
 subscription {
-  heroUpdated(heroId: 5) {
+  heroUpdated(heroId: 1) {
+    id
+    name
+    alias
+  }
+}
+```
+
+Finally update a hero and check the `heroUpdated` subscription for this event. You can only edit those you created.
+```
+mutation {
+  updateSuperHero(superHeroId: 1, input: {name: "GuyDude A", alias: "Bro A"}) {
     id
     name
     alias
