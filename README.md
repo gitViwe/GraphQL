@@ -26,7 +26,7 @@ Things you need to use the software and how to install them.
 2. Run via Docker
    ```
    cd graphql
-   docker compose up -d
+   docker compose up --build -d
    ```
 
 Then navigate to [http://localhost:5161/swagger](http://localhost:5161/swagger), register or login to get a JWT token.

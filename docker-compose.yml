@@ -14,7 +14,7 @@ services:
       - 7166:443
 
   token-api:
-    image: hubviwe/jwtauthentication.token.api:1.0.0
+    image: hubviwe/jwtauthentication.token.api:1.0.6
     hostname: token-api
     container_name: token-api
     environment:
