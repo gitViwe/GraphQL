@@ -3,21 +3,25 @@ version: "3.9"
 services:
 
   graphql-api:
-    image: hubviwe/graphql.api:1.0.0
+    image: hubviwe/graphql.api:1.0.1
+    restart: on-failure
     build:
         context: src/
         dockerfile: API/Dockerfile
     environment:
-        ASPNETCORE_ENVIRONMENT: Development
+        ASPNETCORE_ENVIRONMENT: Docker
     ports:
       - 5192:80
-      - 7166:443
+    links:
+      - postgres
 
-  token-api:
-    image: hubviwe/jwtauthentication.token.api:1.0.6
-    hostname: token-api
-    container_name: token-api
-    environment:
-        ASPNETCORE_ENVIRONMENT: Development
+  postgres:
+    image: postgres
+    hostname: postgres
+    container_name: postgres
+    restart: always
     ports:
-      - 5161:80
+      - 5432:5432
+    environment:
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: pass
