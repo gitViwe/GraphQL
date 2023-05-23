@@ -1,0 +1,56 @@
+mutation {
+	deployOverwatchHero(input: { superHeroId: 9, gameModeId: 12 }) {
+		id
+		combatMapId
+		deployedAt
+		gameMode {
+			name
+			icon
+			description
+			screenshot
+		}
+		superHero {
+			name
+			portrait
+			detail {
+				name
+				description
+				portrait
+				location
+				hitpoints {
+					health
+					armor
+					shields
+					total
+				}
+				story {
+					summary
+					chapters {
+						title
+						content
+						picture
+					}
+				}
+				role {
+					name
+					icon
+					description
+				}
+				abilities {
+					name
+					description
+					icon
+					video {
+						id
+						thumbnail
+						link {
+							id
+							mp4
+							webm
+						}
+					}
+				}
+			}
+		}
+	}
+}

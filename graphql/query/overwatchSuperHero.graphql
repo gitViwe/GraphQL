@@ -1,0 +1,59 @@
+query {
+	overwatchSuperHero(id: 1) {
+		id
+		name
+		key
+		portrait
+		detail {
+			id
+			name
+			description
+			portrait
+			location
+			hitpoints {
+				id
+				health
+				armor
+				shields
+				total
+			}
+			story {
+				id
+				summary
+				media {
+					id
+					type
+					link
+				}
+				chapters {
+					id
+					title
+					content
+					picture
+				}
+			}
+			role {
+				id
+				key
+				name
+				icon
+				description
+			}
+			abilities {
+				id
+				name
+				description
+				icon
+				video {
+					id
+					thumbnail
+					link {
+						id
+						mp4
+						webm
+					}
+				}
+			}
+		}
+	}
+}

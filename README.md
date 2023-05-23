@@ -23,72 +23,27 @@ Things you need to use the software and how to install them.
    ```sh
    git clone https://github.com/gitViwe/GraphQL.git
    ```
-2. Run via Docker
+2. Run via VisualStudio / VS Code
+   ```
+   cd graphql
+   dotnet run
+   ```
+3. Run via Docker
    ```
    cd graphql
    docker compose up --build -d
    ```
 
-Then navigate to [http://localhost:5161/swagger](http://localhost:5161/swagger), register or login to get a JWT token.
+### Get started 
+If you have setup everything correctly, you should be able to open the GraphQL IDE Banana Cake Pop at [http://localhost:5192/graphql](http://localhost:5192/graphql)
 
 ### Executing a query
-Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL requests.
-`Bearer <token>`
+Let's start with performing queries on the database. You can find some graph queries in the folder `/graphql/query`
 
-If you have setup everything correctly, you should be able to open [GraphQL IDE Banana Cake Pop](https://chillicream.com/docs/hotchocolate/v12/get-started-with-graphql-in-net-core/#executing-a-query) at [http://localhost:5192/graphql](http://localhost:5192/graphql)
+### Executing a mutation
+Then we can modify some data. You can find some graph mutations in the folder `/graphql/mutation`
+Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL requests. `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkMGM5YTU0OS01MWNlLTRhN2QtODhjNi0yOGUxZDgxNDVlZTAiLCJ1bmlxdWVfbmFtZSI6IlZpd2U0NTYiLCJlbWFpbCI6ImV4YW1wbGUtMkBlbWFpbC5jb20iLCJqdGkiOiI1NGZkOTg2MS05YWUwLTQ4ZWYtYmJhMi01MGRiMWJlNmRiYjEiLCJuYmYiOjE2Njk0NjIxNzcsImV4cCI6MTY2OTQ2Mjc3NywiaWF0IjoxNjY5NDYyMTc3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTYxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE2MSJ9.LZ9pObhNp7XSeU6LvQEMDioHvH7PFPipIrcSVaPrW1M`
 
-Let's start with checking the entries on the database
-```
-query {
-  heroes {
-    id
-    name
-    alias
-    createdBy
-  }
-}
-```
-
-Now subscribe to the hero created event
-```
-subscription {
-  heroCreated {
-    id
-    name
-    alias
-  }
-}
-```
-
-Let's create our own hero and check the `heroCreated` subscription for this event
-```
-mutation {
-  addSuperHero(input: {name: "John Doe", alias: "JD"}) {
-    id
-    name
-    alias
-  }
-}
-```
-
-Next, we fire up another subscription for updating a hero.
-```
-subscription {
-  heroUpdated(heroId: 1) {
-    id
-    name
-    alias
-  }
-}
-```
-
-Finally update a hero and check the `heroUpdated` subscription for this event. You can only edit those you created.
-```
-mutation {
-  updateSuperHero(superHeroId: 1, input: {name: "GuyDude A", alias: "Bro A"}) {
-    id
-    name
-    alias
-  }
-}
-```
+### Executing a subscription
+Now subscribe to events. You can find some graph subscriptions in the folder `/graphql/subscription`
+Let's create another `deployOverwatchHero` and check the `superHeroDeployed` subscription for this event.
