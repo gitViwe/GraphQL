@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+src/api/graphql_database*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

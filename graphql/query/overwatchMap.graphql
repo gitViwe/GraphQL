@@ -1,0 +1,17 @@
+query {
+	overwatchMap(id: 12) {
+		id
+		name
+		screenshot
+		location
+		countryCode
+		gamemodes {
+			id
+			key
+			name
+			icon
+			description
+			screenshot
+		}
+	}
+}

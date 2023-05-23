@@ -1,0 +1,15 @@
+mutation {
+	deployOverwatchHero(input: { superHeroId: 9, gameModeId: 12 }) {
+		id
+		combatMapId
+		deployedAt
+		gameMode {
+			name
+			screenshot
+		}
+		superHero {
+			name
+			portrait
+		}
+	}
+}
