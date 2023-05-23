@@ -35,15 +35,15 @@ Things you need to use the software and how to install them.
    ```
 
 ### Get started 
-If you have setup everything correctly, you should be able to open the GraphQL IDE Banana Cake Pop at [http://localhost:5192/graphql](http://localhost:5192/graphql)
+- If you have setup everything correctly, you should be able to open the GraphQL IDE Banana Cake Pop at [http://localhost:5192/graphql](http://localhost:5192/graphql)
 
 ### Executing a query
-Let's start with performing queries on the database. You can find some graph queries in the folder `/graphql/query`
+- Let's start with performing queries on the database. You can find some graph queries in the folder `/graphql/query`
 
 ### Executing a mutation
-Then we can modify some data. You can find some graph mutations in the folder `/graphql/mutation`
-Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL requests. `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkMGM5YTU0OS01MWNlLTRhN2QtODhjNi0yOGUxZDgxNDVlZTAiLCJ1bmlxdWVfbmFtZSI6IlZpd2U0NTYiLCJlbWFpbCI6ImV4YW1wbGUtMkBlbWFpbC5jb20iLCJqdGkiOiI1NGZkOTg2MS05YWUwLTQ4ZWYtYmJhMi01MGRiMWJlNmRiYjEiLCJuYmYiOjE2Njk0NjIxNzcsImV4cCI6MTY2OTQ2Mjc3NywiaWF0IjoxNjY5NDYyMTc3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTYxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE2MSJ9.LZ9pObhNp7XSeU6LvQEMDioHvH7PFPipIrcSVaPrW1M`
+- Then we can modify some data. You can find some graph mutations in the folder `/graphql/mutation`
+- Remember to add the JWT token to the HTTP header 'Authorization' for the GraphQL requests. `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkMGM5YTU0OS01MWNlLTRhN2QtODhjNi0yOGUxZDgxNDVlZTAiLCJ1bmlxdWVfbmFtZSI6IlZpd2U0NTYiLCJlbWFpbCI6ImV4YW1wbGUtMkBlbWFpbC5jb20iLCJqdGkiOiI1NGZkOTg2MS05YWUwLTQ4ZWYtYmJhMi01MGRiMWJlNmRiYjEiLCJuYmYiOjE2Njk0NjIxNzcsImV4cCI6MTY2OTQ2Mjc3NywiaWF0IjoxNjY5NDYyMTc3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTYxIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE2MSJ9.LZ9pObhNp7XSeU6LvQEMDioHvH7PFPipIrcSVaPrW1M`
 
 ### Executing a subscription
-Now subscribe to events. You can find some graph subscriptions in the folder `/graphql/subscription`
-Let's create another `deployOverwatchHero` and check the `superHeroDeployed` subscription for this event.
+- Now subscribe to events. You can find some graph subscriptions in the folder `/graphql/subscription`
+- Let's create another `deployOverwatchHero` and check the `superHeroDeployed` subscription for this event.
