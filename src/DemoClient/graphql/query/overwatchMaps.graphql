@@ -1,0 +1,9 @@
+query {
+	overwatchMaps {
+		id
+		name
+		screenshot
+		location
+		countryCode
+	}
+}
