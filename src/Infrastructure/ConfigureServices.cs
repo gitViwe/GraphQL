@@ -9,24 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Reflection;
 
 namespace Infrastructure;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddGraphQLServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+    public static IServiceCollection AddGraphQLServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddPooledDbContextFactory<DatabaseContext>(options =>
         {
-            if (environment.IsDevelopment())
-            {
-                options.UseSqlite(configuration.GetConnectionString(ConfigurationKey.ConnectionString.SQLite));
-            }
-            else
-            {
-                options.UseNpgsql(configuration.GetConnectionString(ConfigurationKey.ConnectionString.PostgreSQL)!, b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
-            }
+            options.UseSqlite(configuration.GetConnectionString(ConfigurationKey.ConnectionString.SQLite));
         });
 
         services.AddSingleton<OverwatchDataService>();
@@ -45,20 +37,13 @@ public static class ConfigureServices
         return services;
     }
 
-    public static async Task ApplyMigrationAsync(this IHost host, IHostEnvironment environment)
+    public static async Task EnsureDatabaseCreatedAsync(this IHost host)
     {
         using IServiceScope scope = host.Services.CreateScope();
         var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<DatabaseContext>>();
 
         using var context = await contextFactory.CreateDbContextAsync();
-        if (environment.IsDevelopment())
-        {
-            await context.Database.EnsureCreatedAsync();
-        }
-        else
-        {
-            await context.Database.MigrateAsync();
-        }
+        await context.Database.EnsureCreatedAsync();
     }
 
     public static async Task SeedDataAsync(this IHost host)
@@ -74,14 +59,14 @@ public static class ConfigureServices
             var heroes = await dataService.GetOverwatchHeroesAsync();
             var heroDetails = dataService.GetOverwatchHeroDetails();
             var heroRoles = await dataService.GetOverwatchHeroRolesAsync();
-            await context.OverwatchSuperHeroes.AddRangeAsync(heroes.Select(x => x.ToOverwatchSuperHero().AddDetail(heroDetails, heroRoles.Select(x => x.ToOverwatchSuperHeroRole())))); 
+            await context.OverwatchSuperHeroes.AddRangeAsync(heroes.Select(x => x.ToOverwatchSuperHero().AddDetail(heroDetails, heroRoles.Select(x => x.ToOverwatchSuperHeroRole()))));
         }
 
         if (!context.OverwatchMaps.Any())
         {
             var gameModes = await dataService.GetOverwatchGameModesAsync();
             var maps = await dataService.GetOverwatchMapsAsync();
-            await context.OverwatchMaps.AddRangeAsync(maps.Select(x => x.ToOverwatchCombatMap(gameModes.Select(x => x.ToOverwatchMode())))); 
+            await context.OverwatchMaps.AddRangeAsync(maps.Select(x => x.ToOverwatchCombatMap(gameModes.Select(x => x.ToOverwatchMode()))));
         }
 
         await context.SaveChangesAsync();

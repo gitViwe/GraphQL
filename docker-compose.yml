@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   graphql-api:
-    image: hubviwe/graphql.api:1.0.1
+    image: hubviwe/graphql.api:1.0.2
     restart: on-failure
     build:
         context: src/
@@ -12,16 +12,3 @@ services:
         ASPNETCORE_ENVIRONMENT: Docker
     ports:
       - 5192:80
-    links:
-      - postgres
-
-  postgres:
-    image: postgres
-    hostname: postgres
-    container_name: postgres
-    restart: always
-    ports:
-      - 5432:5432
-    environment:
-        POSTGRES_USER: user
-        POSTGRES_PASSWORD: pass

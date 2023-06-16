@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Application.Constant;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -6,7 +7,7 @@ namespace API.Extension;
 
 public static class ServiceCollectionExtension
 {
-    public static IServiceCollection AddJWTAuthentication(this IServiceCollection services)
+    public static IServiceCollection AddJWTAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
         {
@@ -16,7 +17,7 @@ public static class ServiceCollectionExtension
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("vxL2V6EEj8HjgU6NxMhcNWAf0Ejxmcuj")),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration[ConfigurationKey.API.Secret]!)),
                 ValidateIssuerSigningKey = false,
             };
             options.Events = new JwtBearerEvents()

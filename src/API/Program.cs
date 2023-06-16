@@ -4,8 +4,8 @@ using Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddGraphQLServices(builder.Configuration, builder.Environment);
-builder.Services.AddJWTAuthentication();
+builder.Services.AddGraphQLServices(builder.Configuration);
+builder.Services.AddJWTAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -28,7 +28,7 @@ app.UseWebSockets();
 
 app.MapGraphQL();
 
-await app.ApplyMigrationAsync(app.Environment);
+await app.EnsureDatabaseCreatedAsync();
 await app.SeedDataAsync();
 
 app.Run();
