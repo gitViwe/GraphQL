@@ -34,6 +34,7 @@ jobs:
           files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
         env:
           APIConfiguration.Secret: ${{secrets.JWT_SECRET_KEY}}
+          ConnectionStrings.PostgreSQL: ${{secrets.POSTGRESQL}}
           OpenTelemetry.Honeycomb.Headers: ${{secrets.OTLP_HONEYCOMB_HEADER}}
 
       - name: Upload artifact for deployment job

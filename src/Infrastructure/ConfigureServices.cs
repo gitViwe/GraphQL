@@ -11,16 +11,25 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System.Reflection;
 
 namespace Infrastructure;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddGraphQLServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddGraphQLServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
     {
         services.AddPooledDbContextFactory<DatabaseContext>(options =>
         {
-            options.UseSqlite(configuration.GetConnectionString(ConfigurationKey.ConnectionString.SQLite));
+            if (environment.IsProduction())
+            {
+                options.UseNpgsql(configuration.GetConnectionString(ConfigurationKey.ConnectionString.PostgreSQL),
+                    builder => builder.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+            }
+            else
+            {
+                options.UseSqlite(configuration.GetConnectionString(ConfigurationKey.ConnectionString.SQLite));
+            }
         });
 
         services.AddSingleton<OverwatchDataService>();
@@ -76,13 +85,21 @@ public static class ConfigureServices
         });
     }
 
-    public static async Task EnsureDatabaseCreatedAsync(this IHost host)
+    public static async Task EnsureDatabaseCreatedAsync(this IHost host, IHostEnvironment environment)
     {
         using IServiceScope scope = host.Services.CreateScope();
         var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<DatabaseContext>>();
 
         using var context = await contextFactory.CreateDbContextAsync();
-        await context.Database.EnsureCreatedAsync();
+
+        if (environment.IsProduction())
+        {
+            await context.Database.MigrateAsync();
+        }
+        else
+        {
+            await context.Database.EnsureCreatedAsync();
+        }
     }
 
     public static async Task SeedDataAsync(this IHost host)

@@ -4,7 +4,7 @@ using Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddGraphQLServices(builder.Configuration);
+builder.Services.AddGraphQLServices(builder.Configuration, builder.Environment);
 builder.Services.AddJWTAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.RegisterOpenTelemetry(builder.Configuration, builder.Environment);
@@ -29,7 +29,7 @@ app.UseWebSockets();
 
 app.MapGraphQL();
 
-await app.EnsureDatabaseCreatedAsync();
+await app.EnsureDatabaseCreatedAsync(app.Environment);
 await app.SeedDataAsync();
 
 app.Run();
