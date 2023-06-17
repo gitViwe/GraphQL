@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace Infrastructure;
 
@@ -35,6 +37,43 @@ public static class ConfigureServices
             .AddAuthorization();
 
         return services;
+    }
+
+    public static void RegisterOpenTelemetry(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+    {
+        var resource = ResourceBuilder.CreateDefault().AddService(configuration[ConfigurationKey.API.ApplicationName]!);
+
+        services.AddOpenTelemetry().WithTracing(builder =>
+        {
+            builder.SetResourceBuilder(resource)
+                   .AddHttpClientInstrumentation(options =>
+                   {
+                       options.RecordException = true;
+                       options.EnrichWithException = (activity, exception) => activity?.RecordException(exception);
+                   })
+                   .AddEntityFrameworkCoreInstrumentation(x => x.SetDbStatementForText = true)
+                   .AddAspNetCoreInstrumentation(options =>
+                   {
+                       options.RecordException = true;
+                       options.EnrichWithException = (activity, exception) => activity.RecordException(exception);
+                   });
+            if (environment.IsProduction())
+            {
+                builder.AddOtlpExporter(option =>
+                {
+                    option.Endpoint = new Uri(configuration[ConfigurationKey.OpenTelemetry.Honeycomb.Endpoint]!);
+                    option.Headers = configuration[ConfigurationKey.OpenTelemetry.Honeycomb.Headers]!;
+                });
+            }
+            else
+            {
+                builder.AddJaegerExporter(options =>
+                {
+                    options.AgentHost = configuration[ConfigurationKey.OpenTelemetry.Jaeger.AgentHost]!;
+                    options.AgentPort = int.Parse(configuration[ConfigurationKey.OpenTelemetry.Jaeger.AgentPort]!);
+                });
+            }
+        });
     }
 
     public static async Task EnsureDatabaseCreatedAsync(this IHost host)

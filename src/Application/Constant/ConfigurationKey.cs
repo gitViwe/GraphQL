@@ -24,4 +24,22 @@ public static class ConfigurationKey
         public const string ClientUrl = "APIConfiguration:ClientUrl";
         public const string ServerUrl = "APIConfiguration:ServerUrl";
     }
+
+    /// <summary>
+    /// Provides the keys to get the values from the OpenTelemetry section
+    /// </summary>
+    public static class OpenTelemetry
+    {
+        public static class Honeycomb
+        {
+            public const string Endpoint = "OpenTelemetry:Honeycomb:Endpoint";
+            public const string Headers = "OpenTelemetry:Honeycomb:Headers";
+        }
+
+        public static class Jaeger
+        {
+            public const string AgentHost = "OpenTelemetry:Jaeger:AgentHost";
+            public const string AgentPort = "OpenTelemetry:Jaeger:AgentPort";
+        }
+    }
 }

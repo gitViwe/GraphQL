@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x'
           include-prerelease: true
@@ -27,6 +27,14 @@ jobs:
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
+        env:
+          APIConfiguration.Secret: ${{secrets.JWT_SECRET_KEY}}
+          OpenTelemetry.Honeycomb.Headers: ${{secrets.OTLP_HONEYCOMB_HEADER}}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2

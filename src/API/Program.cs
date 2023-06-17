@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGraphQLServices(builder.Configuration);
 builder.Services.AddJWTAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
+builder.Services.RegisterOpenTelemetry(builder.Configuration, builder.Environment);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
