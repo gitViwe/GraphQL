@@ -1,8 +1,19 @@
 query {
-	overwatchSuperHeroes {
-		id
-		name
-		key
-		portrait
+	overwatchSuperHeroes(first: 7) {
+		pageInfo {
+			hasNextPage
+			hasPreviousPage
+			startCursor
+			endCursor
+		}
+		edges {
+			cursor
+			node {
+				id
+				name
+				key
+				portrait
+			}
+		}
 	}
 }

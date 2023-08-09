@@ -43,7 +43,8 @@ public static class ConfigureServices
             .AddMutationType<OverwatchSuperHeroMutation>()
             .AddSubscriptionType<OverwatchSuperHeroSubscription>()
             .AddInMemorySubscriptions()
-            .AddAuthorization();
+            .AddAuthorization()
+            .AddInstrumentation();
 
         return services;
     }
@@ -65,7 +66,8 @@ public static class ConfigureServices
                    {
                        options.RecordException = true;
                        options.EnrichWithException = (activity, exception) => activity.RecordException(exception);
-                   });
+                   })
+                   .AddHotChocolateInstrumentation();
             if (environment.IsProduction())
             {
                 builder.AddOtlpExporter(option =>

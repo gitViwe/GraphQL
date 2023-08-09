@@ -8,6 +8,7 @@ namespace Infrastructure.GraphQL.Query;
 [GraphQLDescription("The  class to encapsulate the GraphQL queries for Overwatch Super Heroes")]
 public class OverwatchSuperHeroQuery
 {
+    [UsePaging]
     [GraphQLDescription("The query for the Overwatch Super Heroes.")]
     public async Task<IQueryable<OverwatchSuperHero>> GetOverwatchSuperHeroesAsync(
         [Service] IDbContextFactory<DatabaseContext> contextFactory,
